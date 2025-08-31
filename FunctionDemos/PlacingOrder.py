@@ -1,5 +1,4 @@
-from ib_insync import IB, Stock, MarketOrder, LimitOrder
-import ibkrconfig
+from ib_insync import IB, Stock, MarketOrder
 
 ib = IB()
 ib.connect('127.0.0.1', ibkrconfig.PORT, 1)

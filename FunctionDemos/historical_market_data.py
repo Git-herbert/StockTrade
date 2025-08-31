@@ -1,6 +1,4 @@
 from ib_insync import IB, Stock, util
-import ibkrconfig
-import pandas as pd  # For DataFrame conversion
 
 ib = IB()
 ib.connect('127.0.0.1', ibkrconfig.PORT, 1)

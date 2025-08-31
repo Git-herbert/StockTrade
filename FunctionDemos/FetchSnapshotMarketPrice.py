@@ -1,12 +1,12 @@
 from ib_insync import IB, Stock
-import ibkrconfig  # Import your config file
+import IBKRConfig
 
 # Connect to TWS using config port
 ib = IB()
-ib.connect('127.0.0.1', ibkrconfig.PORT, clientId=1)
+ib.connect('127.0.0.1', IBKRConfig.PORT, clientId=1)
 
 # Define the stock contract using config symbol
-stock_contract = Stock(ibkrconfig.SYMBOL, 'SMART', 'USD')
+stock_contract = Stock(IBKRConfig.SYMBOL, 'SMART', 'USD')
 ib.qualifyContracts(stock_contract)
 
 # Request snapshot market data

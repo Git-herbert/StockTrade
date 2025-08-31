@@ -1,7 +1,6 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
-import ibkrconfig
 
 # 配置信息
 smtp_server = 'smtp.exmail.qq.com'  # SMTP 服务器

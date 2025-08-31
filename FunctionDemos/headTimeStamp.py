@@ -3,7 +3,7 @@ from ibapi.wrapper import *
 import datetime
 import time
 import threading
-import ibkrconfig
+
 
 class TestApp(EClient, EWrapper):
     def __init__(self):

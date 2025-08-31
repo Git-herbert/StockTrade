@@ -1,12 +1,12 @@
-from ib_insync import IB, Stock, util
-import ibkrconfig
+from ib_insync import IB, Stock
+import IBKRConfig
 
 # For Jupyter or interactive: util.startLoop()
 
 ib = IB()
-ib.connect('127.0.0.1', ibkrconfig.PORT, 1)
+ib.connect('127.0.0.1', IBKRConfig.PORT, 1)
 
-stock_contract = Stock(ibkrconfig.SYMBOL, 'SMART', 'USD')
+stock_contract = Stock(IBKRConfig.SYMBOL, 'SMART', 'USD')
 ib.qualifyContracts(stock_contract)
 
 # Request streaming market data
