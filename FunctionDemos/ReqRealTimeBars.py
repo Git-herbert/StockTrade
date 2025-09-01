@@ -10,17 +10,9 @@ stock_contract = Stock(IBKRConfig.SYMBOL, 'SMART', 'USD')
 ib.qualifyContracts(stock_contract)
 
 # Request streaming market data
-ticker = ib.reqMktData(stock_contract)
+bars = ib.reqRealTimeBars(stock_contract, 5, 'MIDPOINT', False)
 
-# Simple loop to print updates for 30 seconds
-for _ in range(30):
-    ib.sleep(1)
-    if ticker.last != float('nan'):
-        print(ticker)
-        print(ticker.close)
-
-# Cancel and disconnect
-ib.cancelMktData(stock_contract)
+ib.run()
 ib.disconnect()
 
 
