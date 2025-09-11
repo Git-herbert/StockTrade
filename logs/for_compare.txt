@@ -1,0 +1,29 @@
+from base import StrategyAbstract
+import IBKRConfig as config
+
+class PriceDropStrategy(StrategyAbstract):
+    """价格跌幅策略：4%跌幅卖出，回升买回"""
+
+    def __init__(self, symbol, ib_client, **kwargs):
+        super().__init__(symbol, ib_client)
+        self.sold = False  # 是否已卖出
+        self.quantity = kwargs.get('quantity', 1)  # 默认1股
+        self.logger = kwargs.get('logger')  # 传递logger
+
+    def generate_signal(self, new_data):
+        # 为兼容保留，实际逻辑在check_and_trade
+        return None
+
+    def check_and_trade(self, today_open, current_close):
+        """检查价格跌幅并执行交易"""
+        if today_open is None or current_close is None:
+            self.logger.info(f"{self.symbol}: 无有效数据，跳过交易")
+            return
+
+        drop_pct = (current_close - today_open) / today_open * 100
+        if drop_pct < -config.DROP_THRESHOLD and not self.sold:
+            self.execute_order('SELL', self.quantity)
+            self.sold = True
+        elif drop_pct >= -config.DROP_THRESHOLD and self.sold:
+            self.execute_order('BUY', self.quantity)
+            self.sold = False

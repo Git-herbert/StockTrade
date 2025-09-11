@@ -1,5 +1,5 @@
 from ib_insync import IB, Stock
-import IBKRConfig
+import ibkr_config
 
 # Connect to TWS using config port
 ib = IB()
