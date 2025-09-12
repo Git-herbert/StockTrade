@@ -1,5 +1,4 @@
 from ib_insync import IB, Stock
-import ibkr_config
 
 # For Jupyter or interactive: util.startLoop()
 

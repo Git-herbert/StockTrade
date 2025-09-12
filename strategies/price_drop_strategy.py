@@ -1,5 +1,6 @@
-from base import StrategyAbstract
-import config as config  # IBKRConfig
+from strategies.base import StrategyAbstract
+import ibkr_db_config as config
+
 
 class PriceDropStrategy(StrategyAbstract):
     """

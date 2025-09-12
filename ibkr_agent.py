@@ -1,7 +1,7 @@
 from ib_insync import IB, Stock, util
 from custom_logger import CustomLogger
 
-class DataCollector:
+class IbkrAgent:
     """管理IBKR实时数据采集"""
 
     def __init__(self, host, port, client_id, db_manager):
@@ -15,7 +15,7 @@ class DataCollector:
     def on_bar_update(self, bars, has_new_bar, symbol):
         """处理新Bar数据，插入数据库"""
         if has_new_bar:
-            self.db_manager.insert_bar(symbol, bars[-1])
+            self.db_manager.insert_5s_bar(symbol, bars[-1])
 
     def subscribe_realtime_bars(self, contract, symbol):
         """订阅实时5秒K线"""

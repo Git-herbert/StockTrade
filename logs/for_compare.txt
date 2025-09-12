@@ -1,29 +1,27 @@
-from base import StrategyAbstract
-import IBKRConfig as config
+from datetime import date, datetime
 
-class PriceDropStrategy(StrategyAbstract):
-    """价格跌幅策略：4%跌幅卖出，回升买回"""
+LOCALHOST='127.0.0.1'
+PORT = 19994  # Default port for the server
+DATABASE_URL = "sqlite:///mydatabase.db"  # Example database connection string
+API_KEY = "your-secret-api-key"  # Example API key
+DEBUG_MODE = True  # Enable/disable debug logging
 
-    def __init__(self, symbol, ib_client, **kwargs):
-        super().__init__(symbol, ib_client)
-        self.sold = False  # 是否已卖出
-        self.quantity = kwargs.get('quantity', 1)  # 默认1股
-        self.logger = kwargs.get('logger')  # 传递logger
+# Current date as 'YYYY-MM-DD'
+CURRENT_DATE = date.today().isoformat()
 
-    def generate_signal(self, new_data):
-        # 为兼容保留，实际逻辑在check_and_trade
-        return None
+# Current date and time as custom text
+CURRENT_TIME = datetime.now()
+CURRENT_TIME_STR = CURRENT_TIME.strftime('%Y-%m-%d %H:%M:%S')  # Format: Year-Month-Day Hour:Minute:Second
 
-    def check_and_trade(self, today_open, current_close):
-        """检查价格跌幅并执行交易"""
-        if today_open is None or current_close is None:
-            self.logger.info(f"{self.symbol}: 无有效数据，跳过交易")
-            return
+sender_email = 'xuhaobin@wareorigin.com'  # 您的企业邮箱地址
+password = '6eArdSv123xeHK'  # 步骤 1 中生成的客户端专用密码
 
-        drop_pct = (current_close - today_open) / today_open * 100
-        if drop_pct < -config.DROP_THRESHOLD and not self.sold:
-            self.execute_order('SELL', self.quantity)
-            self.sold = True
-        elif drop_pct >= -config.DROP_THRESHOLD and self.sold:
-            self.execute_order('BUY', self.quantity)
-            self.sold = False
+DROP_THRESHOLD = 4.0  # 跌幅阈值，单位：%
+
+if __name__ == '__main__':
+    print(CURRENT_DATE)
+    print(type(CURRENT_DATE))
+    print(CURRENT_TIME)
+    print(CURRENT_TIME_STR)
+    print("aaa" + "bbb")
+    pass

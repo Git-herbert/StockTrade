@@ -1,9 +1,8 @@
-import threading
 import time
 from custom_logger import CustomLogger
-import ibkr_config as config
-from data_collector import DataCollector
-from database_manager import DatabaseManager
+import ibkr_db_config as config
+from ibkr_agent import DataCollector
+from database.base import DatabaseManager
 
 class TradingAgent:
     """协调数据采集、数据库操作和交易策略"""
@@ -36,3 +35,9 @@ class TradingAgent:
             except Exception as e:
                 self.logger.error(f"交易逻辑错误: {e}")
             time.sleep(5)
+
+if __name__ == '__main__':
+
+    agent = TradingAgent()
+
+    pass

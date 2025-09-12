@@ -12,3 +12,13 @@
 
 
 
+重新改一下整个流程，我现在先要把main.py的各个步骤先列出来，你帮忙列出TODO项的注释
+
+1.先查询config文件夹下的ibkr_config获取ibkr的连接串信息，ibkr_config.py内没有股票的代码。
+LOCALHOST='127.0.0.1'
+PORT = 19994  # Default port for the server
+sender_email = 'xuhaobin@wareorigin.com'  # 您的企业邮箱地址
+password = '6eArdSv123xeHK'  # 步骤 1 中生成的客户端专用密码
+DATABASE_URL = "sqlite:///mydatabase.db"  # Example database connection string
+API_KEY = "your-secret-api-key"  # Example API key
+DEBUG_MODE = True  # Enable/disable debug logging

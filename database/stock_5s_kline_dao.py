@@ -1,17 +1,9 @@
-import sqlite3
+from database.base import DatabaseAbstract
 from datetime import date
-from custom_logger import CustomLogger
-import ibkr_config as config
 
-class DatabaseManager:
-    """管理数据库操作：连接、建表、插入、查询"""
-
-    def __init__(self, db_url=config.DATABASE_URL):
-        self.logger = CustomLogger(name="database_manager", log_dir="logs")
-        self.db_path = db_url.replace("sqlite:///", "")
-        self.conn = sqlite3.connect(self.db_path, check_same_thread=False)  # 允许多线程
-        self.cursor = self.conn.cursor()
-        self._create_table()
+class Kline5sDatabaseManager(DatabaseAbstract):
+    """具体实现：针对 stock_5s_kline 表的操作"""
+    # 如果子类没有定义__init__则会自动调用父类init
 
     def _create_table(self):
         """创建5秒K线表"""
@@ -31,9 +23,9 @@ class DatabaseManager:
         );
         """)
         self.conn.commit()
-        self.logger.info("数据库表已创建或存在")
+        self.logger.info("stock_5s_kline 表已创建或存在")
 
-    def insert_bar(self, symbol, bar):
+    def insert_data(self, symbol, bar):
         """插入5秒K线数据"""
         try:
             timestamp = bar.date.strftime('%Y-%m-%d %H:%M:%S')
@@ -43,9 +35,9 @@ class DatabaseManager:
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (symbol, timestamp, bar.open, bar.high, bar.low, bar.close, bar.volume, None, None, None))
             self.conn.commit()
-            self.logger.info(f"插入数据: {symbol} at {timestamp}")
+            self.logger.info(f"插入数据到 stock_5s_kline: {symbol} at {timestamp}")
         except Exception as e:
-            self.logger.error(f"插入数据失败: {e}")
+            self.logger.error(f"插入 stock_5s_kline 数据失败: {e}")
 
     def get_today_opening(self, symbol):
         """获取当日开盘价（最早的open）"""
@@ -59,7 +51,7 @@ class DatabaseManager:
             result = self.cursor.fetchone()
             return result[0] if result else None
         except Exception as e:
-            self.logger.error(f"查询开盘价失败: {e}")
+            self.logger.error(f"查询 stock_5s_kline 开盘价失败: {e}")
             return None
 
     def get_latest_close(self, symbol):
@@ -73,10 +65,5 @@ class DatabaseManager:
             result = self.cursor.fetchone()
             return result[0] if result else None
         except Exception as e:
-            self.logger.error(f"查询最新收盘价失败: {e}")
+            self.logger.error(f"查询 stock_5s_kline 最新收盘价失败: {e}")
             return None
-
-    def close(self):
-        """关闭数据库连接"""
-        self.conn.close()
-        self.logger.info("数据库连接已关闭")
